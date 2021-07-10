@@ -1,0 +1,12 @@
+---
+APIKEY: 38aa509021mshbf050eca199e6aep10f687jsnc62ddec342a5
+tickers:
+  - icici
+      region : IN
+      ticker : ICICIBANK.NS
+  - titan
+      region : IN
+      ticker : TITAN.NS
+  - tata
+      region : IN
+      ticker : TATASTEEL.NS

@@ -1,0 +1,82 @@
+INE280A01028,Titan Company Ltd.
+INE062A01020,State Bank of India.
+INE090A01021,ICICI Bank Ltd.
+INE266F01018,Aptech Ltd.
+INE209A01019,Agro Tech Foods Ltd.
+INE718H01014,Autoline Industries Ltd.
+INE007A01025,CRISIL Ltd.
+INE879I01012,DB Realty Ltd.
+INE532F01054,Edelweiss Financial Services Ltd.
+INE171A01029,Federal Bank Ltd.
+INE684F01012,Firstsource Solutions Ltd.
+INE007B01023,Geojit Financial Services Ltd.
+INE700A01033,Jubilant Life Sciences Ltd.
+INE949H01023,Man Infraconstruction Ltd.
+INE868B01028,NCC Ltd.
+INE876N01018,Orient Cement Ltd.
+INE050001010,Prakash Pipes Ltd.
+INE603A01013,Prakash Industries Ltd.
+INE886H01027,TV18 Broadcast Ltd.
+INE759V01019,The Mandhana Retail Ventures Ltd.
+INE054A01027,VIP Industries Ltd.
+INE854D01024,United Spirits Ltd.
+INE040A01034,HDFC Bank Ltd.
+INE238A01034,Axis Bank Ltd.
+INE160A01022,Punjab National Bank
+INE551W01018,Ujjivan Small Finance Bank Ltd.
+INE679A01013,CSB Bank Ltd.
+INE415G01027,Rail Vikas Nigam Ltd.
+INE427F01016,Chalet Hotels Ltd.
+INE970X01018,Lemon Tree Hotels Ltd.
+INE646X01014,Astron Paper &amp; Board Mill Ltd.
+INE713T01010,Apollo Micro Systems Ltd.
+INE298J01013,Nippon Life India Asset Management Ltd.
+INE264T01014,Capacite Infraprojects Ltd.
+INE545U01014,Bandhan Bank Ltd.
+INE976G01028,RBL Bank Ltd.
+INE615P01015,Quess Corp Ltd.
+INE081A01012,Tata Steel Ltd.
+INE704P01017,Cochin Shipyard Ltd.
+INE766P01016,Mahindra Logistics Ltd.
+INE066F01012,Hindustan Aeronautics Ltd.
+INE258A01016,BEML Ltd.
+INE075A01022,Wipro Ltd.
+INE366I01010,VRL Logistics Ltd.
+INE205A01025,Vedanta Ltd.
+INE148A01019,Tamilnadu Petroproducts Ltd.
+INE424H01027,Sun TV Network Ltd.
+INE114A01011,Steel Authority of India Ltd.
+INE803H01014,Ruchira Papers Ltd.
+INE891D01026,Redington (India) Ltd.
+INE134E01011,Power Finance Corporation Ltd.
+INE589A01014,NLC India Ltd.
+INE470Y01017,New India Assurance Company Ltd.
+INE139A01034,National Aluminium Company Ltd.
+INE998I01010,Mahindra Holidays and Resorts India Ltd.
+INE150G01020,Lux Industries Ltd.
+INE498L01015,L&amp;T Finance Holdings Ltd.
+INE789E01012,JK Paper Ltd.
+INE154A01025,ITC Ltd.
+INE242A01010,Indian Oil Corporation Ltd.
+INE565A01014,Indian Overseas Bank
+INE053A01029,Indian Hotels Company Ltd.
+INE267A01025,Hindustan Zinc Ltd.
+INE531E01026,Hindustan Copper Ltd.
+INE158A01026,Hero Motocorp Ltd.
+INE995A01013,Gravity India Ltd.
+INE152B01027,Gati Ltd.
+INE129A01019,GAIL India Ltd.
+INE220J01025,Future Consumer Ltd.
+INE510A01028,Engineers India Ltd.
+INE041025011,Embassy Office Parks REIT Ltd.
+INE111A01025,Container Corporation of India Ltd.
+INE482A01020,Ceat Ltd.
+INE476A01014,Canara Bank
+INE032A01023,Bombay Dyeing and Manufacturing Company Ltd.
+INE257A01026,Bharat Heavy Electricals Ltd.
+INE871C01038,Avanti Feeds Ltd.
+INE438A01022,Apollo Tyres Ltd.
+INE659A01023,Sudarshan Chemical Industries Ltd.
+INE142Z01019,Orient Electric Ltd.
+INE213A01029,Oil and Natural Gas Corporation Ltd.
+INE274J01014,Oil India Ltd.
