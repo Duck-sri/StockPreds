@@ -1,0 +1,5 @@
+dbname : stocks
+user : ram
+host : localhost
+password : ramsays17
+port : 5432
