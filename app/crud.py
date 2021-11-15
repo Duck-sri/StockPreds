@@ -1,6 +1,9 @@
 from pydantic.main import validate_model
 from pydantic.types import SecretBytes
+import sqlalchemy
 from sqlalchemy.orm import Session, session
+
+import pandas as pd
 
 import datetime
 
@@ -10,7 +13,7 @@ import models,schemas
 
 
 def create_stock(db:Session,stock:schemas.StockCreate):
-	db_stock = models.Stocks(isin=stock.isin,name=stock.name,ticker=stock.ticker,sector=stock.sector)
+	db_stock = models.Stocks(name=stock.name,ticker=stock.ticker,sector=stock.sector)
 	db.add(db_stock)
 	db.commit()
 	db.refresh(db_stock) # first deleted and got back from database
@@ -18,12 +21,6 @@ def create_stock(db:Session,stock:schemas.StockCreate):
 
 def get_stock_by_id(db:Session,stock_id:int):
 	return db.query(models.Stocks).filter(models.Stocks.id == stock_id).first()
-
-def get_stock_by_isin(db:Session,isin:str):
-	return db.query(models.Stocks).filter(models.Stocks.isin == isin).first()
-
-def get_stockid_from_isin(db:Session,isin:str):
-	return db.query(models.Stocks).filter(models.Stocks.isin == isin).first().id
 
 def get_stocks(db:Session,skip:int=0,limit:int=100):
 	return db.query(models.Stocks).offset(skip).limit(limit).all()
@@ -47,6 +44,15 @@ def create_daily_price(db:Session,price:schemas.OHLCCreate):
 	db.refresh(db_price)
 	return db_price
 
+def insertDataframe2sql(engine:sqlalchemy.engine.base.Engine,df:pd.DataFrame,table_name:str):
+		df.to_sql(
+			# TODO add config file to change db name
+				name=table_name,
+				con=engine,
+				if_exists='append',
+				index_label=['id','date']
+		)
+
 def get_stock_prices(db:Session,stock_id:int,start:datetime.date=None,end:datetime.date=None):
 	qr_symbol = db.query(models.OHLC).filter(models.OHLC.id == stock_id)
 	if(start or end):
@@ -62,10 +68,6 @@ def get_stock_prices(db:Session,stock_id:int,start:datetime.date=None,end:dateti
 		return qr_symbol.all()
 
 
-
-
-	
-
 def create_dividend(db:Session,div:schemas.DividendCreate):
 	db_div = models.Dividends(
 		id = div.id,
@@ -78,4 +80,4 @@ def create_dividend(db:Session,div:schemas.DividendCreate):
 	return db_div
 
 def get_dividends_by_stock(db:Session,stock_id:int):
-	return db.query(models.Dividends).filter(models.Dividends.id == stock_id).all()
+	return db.query(models.Dividends).filter(models.Dividends.id == stock_id).order_by(models.Dividends.date.desc()).all()

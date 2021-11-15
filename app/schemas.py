@@ -44,7 +44,6 @@ class Dividends(DividendBase):
 Stock Details
 """
 class StockBase(BaseModel):
-	isin:str
 	name:str
 	ticker:str
 	sector:str
