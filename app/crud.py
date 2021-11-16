@@ -1,15 +1,10 @@
-from pydantic.main import validate_model
-from pydantic.types import SecretBytes
-import sqlalchemy
 from sqlalchemy.orm import Session, session
-
-import pandas as pd
-
-import datetime
-
 from sqlalchemy.sql.functions import mode
 
-import models,schemas
+import pandas as pd
+import datetime
+
+from app import models,schemas
 
 
 def create_stock(db:Session,stock:schemas.StockCreate):
@@ -21,6 +16,9 @@ def create_stock(db:Session,stock:schemas.StockCreate):
 
 def get_stock_by_id(db:Session,stock_id:int):
 	return db.query(models.Stocks).filter(models.Stocks.id == stock_id).first()
+
+def get_stock_by_ticker(db:Session,ticker:str):
+	return db.query(models.Stocks).filter(models.Stocks.ticker == ticker).first()
 
 def get_stocks(db:Session,skip:int=0,limit:int=100):
 	return db.query(models.Stocks).offset(skip).limit(limit).all()
@@ -44,7 +42,7 @@ def create_daily_price(db:Session,price:schemas.OHLCCreate):
 	db.refresh(db_price)
 	return db_price
 
-def insertDataframe2sql(engine:sqlalchemy.engine.base.Engine,df:pd.DataFrame,table_name:str):
+def insertDataframe2sql(engine,df:pd.DataFrame,table_name:str):
 		df.to_sql(
 			# TODO add config file to change db name
 				name=table_name,
@@ -54,18 +52,17 @@ def insertDataframe2sql(engine:sqlalchemy.engine.base.Engine,df:pd.DataFrame,tab
 		)
 
 def get_stock_prices(db:Session,stock_id:int,start:datetime.date=None,end:datetime.date=None):
-	qr_symbol = db.query(models.OHLC).filter(models.OHLC.id == stock_id)
 	if(start or end):
 		if (start is None):
 			# end is there
-			return qr_symbol.filter(models.OHLC.date <= end).all()
+			return db.query(models.OHLC).filter(models.OHLC.id == stock_id).filter(models.OHLC.date <= end).all()
 		elif (end is None):
 			# start is there
-			return qr_symbol.filter(models.OHLC.date >= start).all()
+			return db.query(models.OHLC).filter(models.OHLC.id == stock_id).filter(models.OHLC.date >= start).all()
 		else:
-			return qr_symbol.filter(models.OHLC.date.between(start,end)).all()
+			return db.query(models.OHLC).filter(models.OHLC.id == stock_id).filter(models.OHLC.date.between(start,end)).all()
 	else:
-		return qr_symbol.all()
+		return db.query(models.OHLC).filter(models.OHLC.id == stock_id).all()
 
 
 def create_dividend(db:Session,div:schemas.DividendCreate):

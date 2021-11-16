@@ -1,6 +1,6 @@
 from typing import List,Dict,Tuple,Optional,Any
 
-from pydantic import BaseModel
+from pydantic import BaseModel,Json
 import datetime
 
 """

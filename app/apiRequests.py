@@ -1,3 +1,4 @@
+from re import S
 from typing import List,Union,Optional,Any
 from sqlalchemy.sql.base import SchemaEventTarget
 from sqlalchemy.util.langhelpers import symbol
@@ -7,13 +8,14 @@ import numpy as np
 import pandas as pd
 pd.options.mode.chained_assignment = None # for that annoying warning
 
+import json
+
 from sqlalchemy.orm import Session
 
 from tqdm import tqdm,trange
 
-import schemas
-import crud
-from database import engine
+from app import schemas,crud
+from app.database import engine
 
 def ticker2Stock(ticker:yf.Ticker)->schemas.StockCreate:
     # print(f"Downloading info for {ticker.ticker}...")
@@ -57,7 +59,7 @@ def ticker2Dataframe(ticker:yf.Ticker,stock_id:int)->pd.DataFrame:
     df = ticker.history(period='max')
     return processDataframe(df,stock_id)
 
-def addSymbols(db:Session,symbols:List[str],hist:bool=True,div:bool=True):
+def addSymbols(db:Session,symbols:List[str],hist:bool=True,div:bool=True)->List[schemas.Stocks]:
     # TODO fix for multiple stocks
     data = yf.Tickers(tickers=' '.join(symbols))
     if hist:
@@ -70,11 +72,13 @@ def addSymbols(db:Session,symbols:List[str],hist:bool=True,div:bool=True):
         )
     total = len(symbols)
     done:int = 0
+    got = []
     for sym,ticker in (t := tqdm(data.tickers.items())):
         stock = ticker2Stock(ticker)
         if stock is not None:
             done += 1
             stock = crud.create_stock(db,stock)
+            got.append(stock)
             t.set_description(f"Done adding {stock.name} in the Database")
             if hist:
                 df = processDataframe(hist_data[sym],stock.id)
@@ -87,7 +91,9 @@ def addSymbols(db:Session,symbols:List[str],hist:bool=True,div:bool=True):
         
         t.set_description(f"{done}/{total} added!!")
 
-def addSymbol(db:Session,symbol:str,hist:bool=True,div:bool=True):
+    return got
+
+def addSymbol(db:Session,symbol:str,hist:bool=True,div:bool=True)->schemas.Stocks:
     ticker = yf.Ticker(symbol)
     stock = ticker2Stock(ticker)
     if stock is not None:
@@ -103,3 +109,5 @@ def addSymbol(db:Session,symbol:str,hist:bool=True,div:bool=True):
             print(f"Done adding {stock.name} divs in the Database")
 
         print()
+        
+    return stock
