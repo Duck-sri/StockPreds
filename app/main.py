@@ -3,8 +3,11 @@ from typing import List
 from fastapi import FastAPI,Depends,HTTPException
 from sqlalchemy.orm import Session
 
-from app import crud,models,schemas
-from app.database import SessionLocal,engine
+#from app import crud,models,schemas
+#from app.database import SessionLocal,engine
+
+import crud,models,schemas
+from database import SessionLocal,engine
 
 # Creating all the tables
 models.Base.metadata.create_all(bind=engine)

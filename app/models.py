@@ -1,11 +1,11 @@
 from pydantic.types import Json
-from sqlalchemy.ext.declarative import declarative_base 
+from sqlalchemy.ext.declarative import declarative_base
 
 from sqlalchemy import Column,ForeignKey
 from sqlalchemy.sql.sqltypes import String,Date,Numeric,VARCHAR,Boolean,Integer,Text,JSON
 from sqlalchemy.orm import relationship
 
-from app.database import Base
+from database import Base
 
 # TODO add model for ticker
 

@@ -6,10 +6,10 @@ from sqlalchemy.orm.session import Session
 import datetime
 
 from sqlalchemy.sql.roles import LimitOffsetRole
-from starlette.responses import HTMLResponse, JSONResponse
+from fastapi.responses import JSONResponse,HTMLResponse
 
-from app.database import SessionLocal
-from app import apiRequests, models,schemas,crud
+from database import SessionLocal
+import apiRequests, models,schemas,crud
 
 app = FastAPI()
 
@@ -26,7 +26,7 @@ def get_db():
 def get_stocks(skip:int=0,limit:int=100,db:Session= Depends(get_db)):
   return crud.get_stocks(db,skip,limit)
 
-@app.get(path='/stocks/{ticker}',response_model=schemas.Stocks)
+@app.get(path='/stock/{ticker}',response_model=schemas.Stocks)
 def get_stock(ticker:str,db:Session= Depends(get_db)):
 	res =  crud.get_stock_by_id(db,int(ticker)) if ticker.isnumeric() else crud.get_stock_by_ticker(db,ticker)
 	return res if res else JSONResponse({"message":f"Stock id(or)ticker : {ticker} does not exists in database"})
@@ -34,6 +34,7 @@ def get_stock(ticker:str,db:Session= Depends(get_db)):
 @app.get(path='/history/{ticker}',response_model=List[schemas.OHLC])
 def get_history(ticker:str,start:datetime.date=None,end:datetime.date=None,db:Session=Depends(get_db)):
 	# TODO add way to mention dates in query headers
+	# TODO check if id is there ???
 	stock_id:int = int(ticker) if ticker.isnumeric() else crud.get_stock_by_ticker(db,ticker).id
 	return crud.get_stock_prices(db,stock_id,start=start,end=end)
 
@@ -46,11 +47,12 @@ def get_dividends(ticker:str,db:Session=Depends(get_db)):
 		if (stock is not None): stock_id = stock.id
 		else: return JSONResponse({"message" : f"Stock id(or)ticker : {ticker} does not exists in database"})
 	return crud.get_dividends_by_stock(db,stock_id)
-	
+
 
 @app.post(path='/add/{ticker}',response_model=Union[None,schemas.Stocks])
 def add_stock(ticker:str,db:Session = Depends(get_db)):
-	if get_stock(ticker,db) is not None:
-		return JSONResponse({ "message" : f"{ticker} already exists"})
+	got = crud.get_stock_by_ticker(db,ticker)
+	if isinstance(got,JSONResponse):
+		return got
 	else:
 		return apiRequests.addSymbol(db,ticker)

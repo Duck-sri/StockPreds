@@ -14,8 +14,8 @@ from sqlalchemy.orm import Session
 
 from tqdm import tqdm,trange
 
-from app import schemas,crud
-from app.database import engine
+import schemas,crud
+from database import engine
 
 def ticker2Stock(ticker:yf.Ticker)->schemas.StockCreate:
     # print(f"Downloading info for {ticker.ticker}...")
@@ -33,7 +33,7 @@ def ticker2Stock(ticker:yf.Ticker)->schemas.StockCreate:
     return stock
 
 def ticker2DividendDataframe(ticker:yf.Ticker,stock_id:int)->pd.DataFrame:
-    df = ticker.dividends 
+    df = ticker.dividends
     df = df.reset_index()
     df.rename(lambda x:x.lower(),axis=1,inplace=True)
     df.rename({'dividends':'dividend'},axis=1,inplace=True)
@@ -41,7 +41,7 @@ def ticker2DividendDataframe(ticker:yf.Ticker,stock_id:int)->pd.DataFrame:
     df['date'] = df['date'].map(lambda x:x.date())
     df.set_index(['id','date'],inplace=True)
     return df
-    
+
 def processDataframe(df:pd.DataFrame,stock_id:int):
     if 'Dividends' in df.columns:
         df.drop(columns=['Dividends','Stock Splits'],inplace=True)
@@ -84,11 +84,11 @@ def addSymbols(db:Session,symbols:List[str],hist:bool=True,div:bool=True)->List[
                 df = processDataframe(hist_data[sym],stock.id)
                 crud.insertDataframe2sql(engine,df,'historical_prices')
                 t.set_description(f"Done adding {stock.name} prices in the Database")
-            if div: 
+            if div:
                 dividends = ticker2DividendDataframe(ticker,stock.id)
                 crud.insertDataframe2sql(engine,dividends,'dividends')
                 t.set_description(f"Done adding {stock.name} divs in the Database")
-        
+
         t.set_description(f"{done}/{total} added!!")
 
     return got
@@ -103,11 +103,11 @@ def addSymbol(db:Session,symbol:str,hist:bool=True,div:bool=True)->schemas.Stock
             df = ticker2Dataframe(ticker,stock.id)
             crud.insertDataframe2sql(engine,df,'historical_prices')
             print(f"Done adding {stock.name} prices in the Database")
-        if div: 
+        if div:
             dividends = ticker2DividendDataframe(ticker,stock.id)
             crud.insertDataframe2sql(engine,dividends,'dividends')
             print(f"Done adding {stock.name} divs in the Database")
 
         print()
-        
+
     return stock

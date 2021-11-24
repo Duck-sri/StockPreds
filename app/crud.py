@@ -4,7 +4,7 @@ from sqlalchemy.sql.functions import mode
 import pandas as pd
 import datetime
 
-from app import models,schemas
+import models,schemas
 
 
 def create_stock(db:Session,stock:schemas.StockCreate):
