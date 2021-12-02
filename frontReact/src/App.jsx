@@ -7,7 +7,7 @@ const App = () => {
   return (
     <div>
       <NavBar />
-      <Stock title='stock_name'/>
+      <Stock title='stock_name' />
     </div>
   )
 }

@@ -1,10 +1,10 @@
 import React from 'react'
 
-const WidgetRow = ({id,value}) => {
+const WidgetRow = ({ id, value }) => {
   return (
     <div className='widget-row'>
-      <p style={{color : 'black'}}>{id}</p>
-      <p style={{color: 'red'}}>{value}</p>
+      <p style={{ color: 'black' }}>{id}</p>
+      <p style={{ color: 'red' }}>{value}</p>
     </div>
   )
 }
@@ -15,7 +15,7 @@ function Widget(props) {
     <div className={props.title}>
       <h3>{props.title}</h3>
       {
-        props.data && Object.entries(props.data).map(ele => <WidgetRow id={ele[0]} value={ele[1]}/>)
+        props.data && Object.entries(props.data).map(ele => <WidgetRow id={ele[0]} value={ele[1]} />)
       }
     </div>
   )
