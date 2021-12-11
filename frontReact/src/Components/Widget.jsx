@@ -10,7 +10,7 @@ const WidgetRow = ({ id, value }) => {
 }
 
 
-function Widget(props) {
+const Widget = (props) => {
   return (
     <div className={props.title}>
       <h3>{props.title}</h3>

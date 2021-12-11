@@ -1,13 +1,13 @@
-from typing import List,Dict,Tuple,Optional,Any
-
-from pydantic import BaseModel,Json
 import datetime
+from typing import Union
+
+from pydantic import BaseModel, Json
 
 """
 OHLC
 """
 class OHLCBase(BaseModel):
-	id:int
+	id:str
 	date:datetime.date
 	open_:float
 	high:float
@@ -28,7 +28,7 @@ Dividends
 """
 
 class DividendBase(BaseModel):
-	id:int
+	id:str
 	date:datetime.date
 	dividend:float
 
@@ -40,22 +40,37 @@ class Dividends(DividendBase):
 	class Config:
 		orm_mode = True
 
+class EarningsBase(BaseModel):
+	id:str
+	date:datetime.date
+	earning:float
+
+class EarningsCreate(EarningsBase):
+	pass
+
+class Earnings(EarningsBase):
+
+	class Config:
+		orm_mode = True
+
 """
 Stock Details
 """
 class StockBase(BaseModel):
+	isin:str
 	name:str
-	ticker:str
+	id:str
 	sector:str
 
 
 class StockCreate(StockBase):
-	pass
+	eps:Union[None,float]
+	pe:Union[None,float]
 
 class Stocks(StockBase):
-	id:int
-	daily_prices:List[OHLC] = list()
-	dividends:List[Dividends] = list()
+	# daily_prices:List[OHLC] = list()
+	# dividends:List[Dividends] = list()
+	# earnings:List[Earnings] = list()
 
 	class Config:
 		orm_mode = True
