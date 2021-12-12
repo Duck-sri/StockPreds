@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import Widget from './Widget'
 
 import data from './data.json'
+import  Grid  from '@material-ui/core/Grid';
 
 function Stock(props) {
   const [Symbol, setSymbol] = useState(props.title);
@@ -15,20 +16,32 @@ function Stock(props) {
 
   return (
     <div className='stock'>
-        <label for='ticker'>Ticker</label>
-        <input
-        type='text'
-        name='ticker'
-        required='required'
-        id = 'ticker'
-        placeholder='ICICIBANK.NS'>
-        </input>
-      <button onClick={renderStock}>Get</button>
+           <div style={{width:'80%',margin:'5px'}}>
+           <label for='ticker' >Ticker : </label>
+           <input
+              type='text'
+              name='ticker'
+              required='required'
+              id = 'ticker'
+              placeholder='ICICIBANK.NS'
+              style={{alignSelf:'center',margin:'5px'}}
+              >
+            </input>
+           <button onClick={renderStock}>Get</button>
+           </div>
       {props.title && (<h1>{Symbol}</h1>)}
       {/* <Symbol /> */}
-      <Widget title='fundamentals' data={data}/>
-      <Widget title='financials' data={data}/>
-      <Widget title='dividends' data={data}/>
+      <Grid  margin= '5px 0px 5px'>
+          <Grid container
+                direction="row"
+                justifyContent="flex-start"
+                margin= '5px 0px 5px'
+               >
+               <Grid item> <Widget title='Fundamentals' data={data}/></Grid>
+               <Grid item> <Widget title='Financials' data={data}/> </Grid>
+          </Grid>
+          <Grid > <Widget title='Dividends' data={data}/></Grid>
+      </Grid>
       {/* <Chart /> */}
     </div>
   )

@@ -1,13 +1,17 @@
 import React from "react"
-
 import NavBar from './Components/NavBar'
 import Stock from './Components/Stock'
 
 const App = () => {
   return (
-    <div>
-      <NavBar />
-      <Stock title='stock_name'/>
+    <div style= {{
+    backgroundRepeat: 'no-repeat',
+    height: '100%',
+    backgroundPosition: 'center',
+    backgroundSize: 'cover' }}>
+  
+    <NavBar />
+      <Stock title='Stock Name'/>
     </div>
   )
 }

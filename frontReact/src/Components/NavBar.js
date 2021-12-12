@@ -2,7 +2,7 @@ import React from 'react'
 
 function NavBar() {
   return (
-    <div className='navbar'>
+    <div className='navbar' style={{float:'right'}}>
       <p className='date'>{new Date().toUTCString()}</p>
     </div>
   )
